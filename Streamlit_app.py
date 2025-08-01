@@ -37,9 +37,7 @@ col1.metric("💰 Total Revenue", f"₹{filtered_df['Total Amount'].sum():,.0f}"
 col2.metric("📦 Total Units Sold", f"{filtered_df['Quantity'].sum():,}")
 col3.metric("🏆 Top Category", filtered_df.groupby('Product Category')['Total Amount'].sum().idxmax())
 
-# -----------------------------
 # EDA Section
-# -----------------------------
 st.markdown("---")
 st.subheader("📋 Exploratory Data Analysis")
 
@@ -91,9 +89,7 @@ with st.expander("💸 Revenue by Category"):
     ax_rev.set_title("Total Revenue by Product Category")
     st.pyplot(fig_rev)
 
-# -----------------------------
 # Visualization Section
-# -----------------------------
 st.markdown("---")
 st.subheader("📊 Visual Analysis")
 
@@ -127,8 +123,7 @@ ax3.set_ylabel("")
 ax3.set_title("Revenue Share by Product Category")
 st.pyplot(fig3)
 
-# -----------------------------
+
 # Footer
-# -----------------------------
 st.markdown("---")
 st.markdown("Made with ❤️ by **Rajeev Kumar** for Guvi project")
