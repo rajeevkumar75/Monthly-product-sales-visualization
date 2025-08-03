@@ -4,16 +4,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# Page Config
+# Page Config:
 st.set_page_config(page_title="🛍️ Retail Sales Dashboard", layout="wide")
 
 
-# Title & Header
+# Title & Header:
 st.title("📊 Monthly Product Sales Visualization")
 st.markdown("Analyze monthly sales data with full EDA, key metrics, and visual insights from your retail dataset.")
 
 
-# Load Dataset
+# Load Dataset:
 @st.cache_data
 def load_data():
     df = pd.read_csv("retail_sales_dataset.csv")
@@ -24,20 +24,20 @@ def load_data():
 
 df = load_data()
 
-# Filter Data
+# Filter Data:
 months = sorted(df['Month'].unique(), key=lambda x: pd.to_datetime(x, format='%b').month)
 selected_months = st.sidebar.multiselect("📅 Filter by Month", months, default=months)
 filtered_df = df[df['Month'].isin(selected_months)]
 
 
-# KPI Metrics
+# KPI Metrics:
 st.subheader("📌 Key Metrics")
 col1, col2, col3 = st.columns(3)
 col1.metric("💰 Total Revenue", f"₹{filtered_df['Total Amount'].sum():,.0f}")
 col2.metric("📦 Total Units Sold", f"{filtered_df['Quantity'].sum():,}")
 col3.metric("🏆 Top Category", filtered_df.groupby('Product Category')['Total Amount'].sum().idxmax())
 
-# EDA Section
+# EDA Section:
 st.markdown("---")
 st.subheader("📋 Exploratory Data Analysis")
 
@@ -89,11 +89,11 @@ with st.expander("💸 Revenue by Category"):
     ax_rev.set_title("Total Revenue by Product Category")
     st.pyplot(fig_rev)
 
-# Visualization Section
+# Visualization Section:
 st.markdown("---")
 st.subheader("📊 Visual Analysis")
 
-# Bar Chart: Units Sold by Category
+# Bar Chart: Units Sold by Category:
 st.markdown("### 🔹 Units Sold by Product Category")
 prod_sales = filtered_df.groupby('Product Category')['Quantity'].sum().sort_values(ascending=False)
 fig1, ax1 = plt.subplots(figsize=(8, 4))
@@ -102,7 +102,7 @@ ax1.set_title("Total Units Sold by Product Category")
 ax1.set_ylabel("Units Sold")
 st.pyplot(fig1)
 
-# Line Chart: Monthly Revenue Trend
+# Line Chart: Monthly Revenue Trend:
 st.markdown("### 🔹 Monthly Revenue Trend")
 monthly_rev = filtered_df.groupby('Month_Num')['Total Amount'].sum().reset_index()
 monthly_rev['Month'] = monthly_rev['Month_Num'].apply(lambda x: pd.to_datetime(str(x), format='%m').strftime('%b'))
@@ -114,7 +114,7 @@ ax2.set_ylabel("Revenue")
 ax2.grid(True)
 st.pyplot(fig2)
 
-# Pie Chart: Revenue Contribution
+# Pie Chart: Revenue Contribution:
 st.markdown("### 🔹 Revenue Contribution by Category")
 cat_share = filtered_df.groupby('Product Category')['Total Amount'].sum()
 fig3, ax3 = plt.subplots(figsize=(4, 4))
@@ -124,6 +124,6 @@ ax3.set_title("Revenue Share by Product Category")
 st.pyplot(fig3)
 
 
-# Footer
+# Footer:
 st.markdown("---")
 st.markdown("Made with ❤️ by **Rajeev Kumar** for Guvi project")
